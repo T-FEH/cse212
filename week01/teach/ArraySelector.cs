@@ -11,6 +11,29 @@ public static class ArraySelector
 
     private static int[] ListSelector(int[] list1, int[] list2, int[] select)
     {
-        return [];
+        // The result has one slot for every entry in the selector array.
+        var result = new int[select.Length];
+
+        // Two "bookmarks" that remember how far we have read into each source list.
+        var index1 = 0;
+        var index2 = 0;
+
+        for (var i = 0; i < select.Length; i++)
+        {
+            if (select[i] == 1)
+            {
+                // Take the next unused value from list1, then move that bookmark forward.
+                result[i] = list1[index1];
+                index1++;
+            }
+            else
+            {
+                // Otherwise the selector is 2: take the next unused value from list2.
+                result[i] = list2[index2];
+                index2++;
+            }
+        }
+
+        return result;
     }
 }
