@@ -16,6 +16,11 @@
 /// </summary>
 public class Maze
 {
+    private const int Left = 0;
+    private const int Right = 1;
+    private const int Up = 2;
+    private const int Down = 3;
+
     private readonly Dictionary<ValueTuple<int, int>, bool[]> _mazeMap;
     private int _currX = 1;
     private int _currY = 1;
@@ -32,7 +37,10 @@ public class Maze
     /// </summary>
     public void MoveLeft()
     {
-        // FILL IN CODE
+        if (!CanMove(Left))
+            throw new InvalidOperationException("Can't go that way!");
+
+        _currX -= 1;
     }
 
     /// <summary>
@@ -41,7 +49,10 @@ public class Maze
     /// </summary>
     public void MoveRight()
     {
-        // FILL IN CODE
+        if (!CanMove(Right))
+            throw new InvalidOperationException("Can't go that way!");
+
+        _currX += 1;
     }
 
     /// <summary>
@@ -50,7 +61,10 @@ public class Maze
     /// </summary>
     public void MoveUp()
     {
-        // FILL IN CODE
+        if (!CanMove(Up))
+            throw new InvalidOperationException("Can't go that way!");
+
+        _currY -= 1;
     }
 
     /// <summary>
@@ -59,7 +73,15 @@ public class Maze
     /// </summary>
     public void MoveDown()
     {
-        // FILL IN CODE
+        if (!CanMove(Down))
+            throw new InvalidOperationException("Can't go that way!");
+
+        _currY += 1;
+    }
+
+    private bool CanMove(int direction)
+    {
+        return _mazeMap.TryGetValue((_currX, _currY), out var moves) && moves[direction];
     }
 
     public string GetStatus()
